@@ -1,0 +1,6 @@
+.img-preview{
+    margin: auto;
+    max-width: 300px;
+    max-height: 250px;
+    overflow: hidden;
+}
