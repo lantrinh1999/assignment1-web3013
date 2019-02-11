@@ -5,6 +5,8 @@ class User extends BaseModel
 {
     public $table = 'users';
 
+        public $cols = ['name', 'email', 'role', 'password'];
+
 
 }
 

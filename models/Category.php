@@ -3,6 +3,7 @@ require_once './models/BaseModel.php';
 class Category extends BaseModel
 {
     public $table = 'categories';
+    
     public function deleteProduct($id)
     {
         $model = new static();

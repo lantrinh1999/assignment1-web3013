@@ -24,6 +24,11 @@ class CategoryController
         global $baseUrl;
         $model = new Category();
         $cates = Category::all();
+        $checkcate_name = "";
+        foreach ($cates as $c) {
+            $checkcate_name .= '"' . $c->cate_name . '", ';
+        }
+        $checkcate_name = rtrim($checkcate_name, ", ");        
         include_once './views/category/addForm.php';
     }
 
@@ -52,6 +57,15 @@ class CategoryController
         $id = $_GET['id'];
         $category = Category::find($id);
         $cates = Category::all();
+     
+        $checkcate_name ="";
+        foreach ($cates as $u) {
+            if ($category->cate_name !== $u->cate_name) {
+                $checkcate_name .= '"' . $u->cate_name . '", ';
+            }
+        }
+
+        $checkcate_name = rtrim($checkcate_name, ", ");        
         include_once './views/category/editForm.php';
     }
 
