@@ -47,7 +47,7 @@ class ProductController
         $products = Product::all();
         $checkname = "";
         foreach ($products as $p) {
-            if ($product->name == $p->name) {
+            if ($product->name !== $p->name) {
                 $checkname .= '"' . $p->name . '", ';
             }
         }

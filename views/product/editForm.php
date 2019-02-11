@@ -8,12 +8,12 @@
     <title>Document</title>
     <link rel="stylesheet" href="plugins/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/main.css">
-        <style type="text/css">
+    <style type="text/css">
         em{
             color: red;
             margin-left: 10px;
         }
-    </style>
+    </style>    
 </head>
 <body>
     <div class="container">
@@ -78,7 +78,8 @@
             </div>
         </form>
     </div>
- 
+
+
 
 
 
