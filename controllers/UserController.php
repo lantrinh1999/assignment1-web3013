@@ -23,23 +23,81 @@ class UserController
         global $baseUrl;
         $model = new User();
         $users = User::all();
-        $checkemail = "";
-        foreach ($users as $u) {
-            $checkemail .= '"' . $u->email . '", ';
-        }
-        $checkemail = rtrim($checkemail, ", ");
+
         // var_dump($checkemail);die;
         include_once './views/user/addForm.php';
     }
 
     public function saveAdd(){
         $model = new User();
+
         foreach($_POST as $key => $val){
             $model->{$key} = $val;
         }
+
+
+
+        // validate
+        $err = false;
+        $namerr = "";
+        $emailerr = "";
+        $passworderr = "";
+        $roleerr = "";
+
+        if(strlen($model->name) == 0 ){
+            $err = true;
+            $nameerr = "Nhập tên";
+        } else if(strlen($model->name) > 191){
+            $err = true;
+            $nameerr = "Tên không vượt quá 191 ký tự!";
+        }
+
+        if(!preg_match("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,10})$^",$model->email))
+        { 
+            $err = true;
+            $emailerr = "Mời nhập đúng định dạng email!";
+        }
+        if($model->email == "" ){
+            $err = true;
+            $email = "Nhập email";
+        } else if(strlen($model->email) > 191){
+            $err = true;
+            $emailerr = "email không vượt quá 191 ký tự!";
+        } 
+        // check trùng email
+        $countUser = User::where('email', '=', "'" . $model->email . "'")->get();
+        if(count($countUser) > 0){
+            $err = true;
+            $emailerr = 'Email "'. $model->email .'" đã tồn tại, hãy nhập email khác!';
+        }
+
+        //check định dạng email
+
+        if ($model->password == "") {
+            $err = true;
+            $passworderr = "Nhập mật khẩu!";
+
+        }
+
+
+        if ($model->password !== $model->confirm_password) {
+            $err = true;
+            $passworderr = "Nhập mật khẩu!";
+            $cpassworderr = "Xác nhận chính xác mật khẩu!";
+
+        }
+
+        if (empty($model->role) || $model->role == null || $model->role < 0) {
+            $err = true;
+            $roleerr = "Mời chọn quyền!";
+        }
+
+        if($err){
+            header("location: ./user-add?nameerr=$nameerr&emailerr=$emailerr&passworderr=$passworderr&cpassworderr=$cpassworderr&roleerr=$roleerr");
+            die;
+        }
+
         $model->password = password_hash($model->password, PASSWORD_DEFAULT);
-
-
         $colQuery = "";
         $valQuery = "";
 
@@ -68,26 +126,95 @@ class UserController
         global $baseUrl;
         $id = $_GET['id'];
         $user = User::find($id);
-        $checkemail = "";
-        $users = User::all();        
-
-        foreach ($users as $u) {
-            if ($user->email !== $u->email) {
-                $checkemail .= '"' . $u->email . '", ';
-            }
-        }
-
-        $checkemail = rtrim($checkemail, ", ");
-        // var_dump($checkemail);die;
-
+        $users = User::all();
         include_once './views/user/editForm.php';
     }
 
     public function saveEdit(){
         $model = new User();
-        $model->id= $_POST['id'];
-        $model->cate_name= $_POST['cate_name'];
-        $model->desc= $_POST['desc'];
+        $id = $_POST['id'];
+        foreach($_POST as $key => $val){
+            $model->{$key} = $val;
+        }
+
+
+
+        // validate
+        $err = false;
+        $namerr = "";
+        $emailerr = "";
+        $passworderr = "";
+        $roleerr = "";
+
+        if(strlen($model->name) == 0 ){
+            $err = true;
+            $nameerr = "Nhập tên";
+        } else if(strlen($model->name) > 191){
+            $err = true;
+            $nameerr = "Tên không vượt quá 191 ký tự!";
+        }
+
+        if(!preg_match("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,10})$^",$model->email))
+        { 
+            $err = true;
+            $emailerr = "Mời nhập đúng định dạng email!";
+        }
+        if($model->email == "" ){
+            $err = true;
+            $email = "Nhập email";
+        } else if(strlen($model->email) > 191){
+            $err = true;
+            $emailerr = "email không vượt quá 191 ký tự!";
+        } 
+        // check trùng email
+        $countUser = User::where('email', '=', "'" . $model->email . "' and id != " . $id)->get();
+        if(count($countUser) > 0){
+            $err = true;
+            $emailerr = 'Email "'. $model->email .'" đã tồn tại, hãy nhập email khác!';
+        }
+
+        //check định dạng email
+
+        if ($model->password == "") {
+            $err = true;
+            $passworderr = "Nhập mật khẩu!";
+
+        }
+
+
+        if ($model->password !== $model->confirm_password) {
+            $err = true;
+            $passworderr = "Nhập mật khẩu!";
+            $cpassworderr = "Xác nhận chính xác mật khẩu!";
+
+        }
+
+        if (empty($model->role) || $model->role == null || $model->role < 0) {
+            $err = true;
+            $roleerr = "Mời chọn quyền!";
+        }
+
+        if($err){
+            header("location: ./user-edit?id=$id&&nameerr=$nameerr&emailerr=$emailerr&passworderr=$passworderr&cpassworderr=$cpassworderr&roleerr=$roleerr");
+            die;
+        }
+
+
+
+
+        $model->password = password_hash($model->password, PASSWORD_DEFAULT);
+
+
+        $colQuery = "";
+        $valQuery = "";
+
+        foreach($model->cols as $co){
+            $colQuery .= "$co, ";
+            $valQuery .= "'". $model->{$co} ."', ";
+        }
+
+        $colQuery = rtrim($colQuery, ", ");
+        $valQuery = rtrim($valQuery, ", ");
 
 
         $model->queryBuilder = "update " . $model->table . " 

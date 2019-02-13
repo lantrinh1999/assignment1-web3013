@@ -24,6 +24,9 @@
                         <label for="">Tên sp</label>
                         <input type="text" name="name" id="" class="form-control" value="<?= $product->name?>">
                         <input type="hidden" name="id" value="<?= $product->id ?>">
+                        <?php if(isset($_GET['nameerr'])):?>
+                            <span class="text-danger err"><?= $_GET['nameerr'] ?></span>
+                        <?php endif?>
                     </div>
                     <div class="form-group">
                         <label for="">Danh mục</label>
@@ -35,18 +38,30 @@
                                 <option <?= $selected ?> value="<?= $c->id?>"><?= $c->cate_name?></option>
                             <?php endforeach;?>
                         </select>
+                        <?php if(isset($_GET['cateerr'])):?>
+                            <span class="text-danger err"><?= $_GET['cateerr'] ?></span>
+                        <?php endif?>
                     </div>
                     <div class="form-group">
                         <label for="">Giá sp</label>
                         <input type="number" name="price" id="" class="form-control" value="<?= $product->price?>">
+                        <?php if(isset($_GET['priceerr'])):?>
+                            <span class="text-danger err"><?= $_GET['priceerr'] ?></span>
+                        <?php endif?>
                     </div>
                     <div class="form-group">
                         <label for="">Sao đánh giá sp</label>
                         <input type="number" name="star" id="" class="form-control" value="<?= $product->star?>">
+                        <?php if(isset($_GET['starerr'])):?>
+                            <span class="text-danger err"><?= $_GET['starerr'] ?></span>
+                        <?php endif?>
                     </div>
                     <div class="form-group">
                         <label for="">Lượt xem sp</label>
                         <input type="number" name="views" id="" class="form-control" value="<?= $product->views?>">
+                        <?php if(isset($_GET['viewerr'])):?>
+                            <span class="text-danger err"><?= $_GET['viewerr'] ?></span>
+                        <?php endif?>
                     </div>
                 </div>
                 <div class="col-sm-6">
@@ -59,16 +74,25 @@
                     <div class="form-group">
                         <label for="">Ảnh sp</label>
                         <input type="file" name="image" id="" class="form-control">
+                        <?php if(isset($_GET['imageerr'])):?>
+                            <span class="text-danger err"><?= $_GET['imageerr'] ?></span>
+                        <?php endif?>
                     </div>
                 </div>
                 <div class="col-12">
                     <div class="form-group">
                         <label for="">Mô tả ngắn</label>
                         <textarea name="short_desc" id="" rows="3" class="form-control" value=""><?= $product->short_desc?></textarea>
+                        <?php if(isset($_GET['short_descerr'])):?>
+                            <span class="text-danger err"><?= $_GET['short_descerr'] ?></span>
+                        <?php endif?>
                     </div>
                     <div class="form-group">
                         <label for="">Chi tiết</label>
                         <textarea name="detail" id="" rows="6" class="form-control" value=""><?= $product->detail?></textarea>
+                        <?php if(isset($_GET['detailerr'])):?>
+                            <span class="text-danger err"><?= $_GET['detailerr'] ?></span>
+                        <?php endif?>
                     </div>
                 </div>
                 <div class="justify-content-center">
@@ -89,91 +113,6 @@
     <script src="plugins/bootstrap/js/bootstrap.min.js"></script>
 
 
-
-    <script type="text/javascript">
-
-
-        $( document ).ready( function () {
-
-            $.mockjax({
-                url: "names.action",
-                response: function(settings) {
-                    var name = settings.data.name,
-                    names = [<?=$checkname?>];
-                    this.responseText = "true";
-                    if ($.inArray(name, names) !== -1) {
-                        this.responseText = "false";
-                    }
-                },
-                responseTime: 500
-            });
-
-
-            $( "#signupForm" ).validate( {
-                rules: {
-                    name: {
-                        required: true,
-                        remote: "names.action"
-
-                    },
-                    cate_id: "required",
-                    price: "required",
-                    star: "required",
-                    views: "required",
-                    short_desc: "required",
-                    detail: "required",
-                    role: "required"
-                },
-                messages: {
-                    cate_id: "Please enter ",
-                    price: "Please enter ",
-                    star: "Please enter ",
-                    views: "Please enter ",
-                    short_desc: "Please enter ",
-                    detail: "Please enter ",
-                    image: "Please choose image ",
-
-                    role: "Please enter ",
-                    name: {
-                        required: "Please enter a valid name",
-                        remote: jQuery.validator.format("{0} is already in use")
-                    },
-                    role: "Please accept our policy"
-                },
-                errorElement: "em",
-                errorPlacement: function ( error, element ) {
-                    // Add the `help-block` class to the error element
-                    error.addClass( "help-block" );
-
-                    if ( element.prop( "type" ) === "checkbox" ) {
-                        error.insertAfter( element.parent( "label" ) );
-                    } else {
-                        error.insertAfter( element );
-                    }
-                },
-                highlight: function ( element, errorClass, validClass ) {
-                    $( element ).parents( ".col-sm-5" ).addClass( "has-error" ).removeClass( "has-success" );
-                },
-                unhighlight: function (element, errorClass, validClass) {
-                    $( element ).parents( ".col-sm-5" ).addClass( "has-success" ).removeClass( "has-error" );
-                },
-
-
-            } );
-            jQuery.validator.addMethod(
-              "regex",
-               function(value, element, regexp) {
-                   if (regexp.constructor != RegExp)
-                      regexp = new RegExp(regexp);
-                   else if (regexp.global)
-                      regexp.lastIndex = 0;
-                      return this.optional(element) || regexp.test(value);
-               },"Please enter a valid name address"
-            );
-
-
-        } );
-    </script>    
 
 </body>
 </html>

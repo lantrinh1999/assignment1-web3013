@@ -9,7 +9,13 @@ class BaseModel
     public static function where($col, $op = '=', $val){
         $model = new static();
         $model->queryBuilder = "select * from " . $model->table 
-                                    . " where $col $op '$val'";
+                                    . " where $col $op $val";
+        return $model;
+    }
+        public static function where2($val){
+        $model = new static();
+        $model->queryBuilder = "select * from " . $model->table 
+                                    . " where $val";
         return $model;
     }
     public static function find($val){
