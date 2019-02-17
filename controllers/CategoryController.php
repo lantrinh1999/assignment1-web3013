@@ -1,20 +1,23 @@
 <?php 
 require_once './models/Product.php';
 require_once './models/Category.php';
+require_once './models/Login.php';
 class CategoryController
 {
     public function index(){
+                global $baseUrl;
+        global $adminUrl;
+        global $adminAssetUrl;
         $categories = Category::all();
         // echo "<pre>";
 
         // var_dump($categorys);die;
-        include_once './views/category/index.php';
+        include_once './views/admin/category/index.php';
     }
 
 
     public function remove(){
         $id = $_GET['id'];
-
         Category::delete($id);
         Category::deleteProduct($id);
         header('location: ./category');
@@ -22,9 +25,11 @@ class CategoryController
 
     public function addForm(){
         global $baseUrl;
+        global $adminUrl;
+        global $adminAssetUrl;
         $model = new Category();
         $cates = Category::all();       
-        include_once './views/category/addForm.php';
+        include_once './views/admin/category/addForm.php';
     }
 
     public function saveAdd(){
@@ -41,6 +46,7 @@ class CategoryController
 
 
         if(strlen($model->cate_name) == 0 ){
+            $err = true;
             $nameerr = "Nhập tên danh mục !";
         } else if(strlen($model->cate_name) > 191){
             $err = true;
@@ -72,18 +78,20 @@ class CategoryController
                     )";
         $model->exeQuery();
         // var_dump($model);die;
-        header('location: ./category');
+        header('location: ./category?success=true');
         
     }
 
 
     public function editForm(){
         global $baseUrl;
+        global $adminUrl;
+        global $adminAssetUrl;
         $id = $_GET['id'];
         $category = Category::find($id);
         $cates = Category::all();
           
-        include_once './views/category/editForm.php';
+        include_once './views/admin/category/editForm.php';
     }
 
     public function saveEdit(){

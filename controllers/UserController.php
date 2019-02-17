@@ -1,14 +1,18 @@
 <?php 
 require_once './models/Product.php';
 require_once './models/User.php';
+require_once './models/Login.php';
 class UserController
 {
     public function index(){
+        global $baseUrl;
+        global $adminUrl;
+        global $adminAssetUrl;        
         $users = User::all();
         // echo "<pre>";
 
         // var_dump($users);die;
-        include_once './views/user/index.php';
+        include_once './views/admin/user/index.php';
     }
 
 
@@ -21,21 +25,23 @@ class UserController
 
     public function addForm(){
         global $baseUrl;
+        global $adminUrl;
+        global $adminAssetUrl;
         $model = new User();
         $users = User::all();
 
         // var_dump($checkemail);die;
-        include_once './views/user/addForm.php';
+        include_once './views/admin/user/addForm.php';
     }
 
     public function saveAdd(){
+        global $baseUrl;        
         $model = new User();
 
         foreach($_POST as $key => $val){
             $model->{$key} = $val;
         }
-
-
+        $model->avatar = "images/avatars/default-avatar.jpg";
 
         // validate
         $err = false;
@@ -117,17 +123,19 @@ class UserController
         
         $model->exeQuery();
         // var_dump($model->queryBuilder);die;
-        header('location: ./user');
+        header('location: ./user?success=true');
         
     }
 
 
     public function editForm(){
         global $baseUrl;
+        global $adminUrl;
+        global $adminAssetUrl;
         $id = $_GET['id'];
         $user = User::find($id);
         $users = User::all();
-        include_once './views/user/editForm.php';
+        include_once './views/admin/user/editForm.php';
     }
 
     public function saveEdit(){
@@ -225,7 +233,7 @@ class UserController
             where id = $model->id";
         
         $model->exeQuery();
-        header('location: ./user');
+        header('location: ./user?success=true');
 
     }
 

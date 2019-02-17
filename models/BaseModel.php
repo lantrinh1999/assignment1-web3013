@@ -1,10 +1,24 @@
 <?php
 class BaseModel
 {
+
     function __construct(){
         $this->connect = new PDO("mysql:host=127.0.0.1;dbname=kaopiz;charset=utf8",
                                     "root", "");
     }
+
+
+
+    public static function count(){
+        $model = new static();
+        $model->queryBuilder = "select count(*) as total from " . $model->table;
+        $result = $model->get();
+        if(count($result) > 0){
+            return $result[0]->total;
+        }
+        return null;
+    }
+
 
     public static function where($col, $op = '=', $val){
         $model = new static();
@@ -12,11 +26,15 @@ class BaseModel
                                     . " where $col $op $val";
         return $model;
     }
-        public static function where2($val){
+        public static function where2($col, $val){
         $model = new static();
         $model->queryBuilder = "select * from " . $model->table 
-                                    . " where $val";
-        return $model;
+                                    . " where $col = '$val'";
+        $result = $model->get();
+        if(count($result) > 0){
+            return $result[0];
+        }
+        return null;
     }
     public static function find($val){
         $model = new static();

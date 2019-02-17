@@ -5,15 +5,18 @@
 
 require_once './models/Product.php';
 require_once './models/Category.php';
+require_once './models/Login.php';
 class ProductController
 {
     public function index(){
-        global $baseUrl;  
+        global $baseUrl;
+        global $adminUrl;
+        global $adminAssetUrl;
         $products = Product::all();
         // echo "<pre>";
 
         // var_dump($products);die;
-        include_once './views/product/index.php';
+        include_once './views/admin/product/index.php';
     }
 
 
@@ -27,20 +30,24 @@ class ProductController
 
     public function addForm(){
         global $baseUrl;
+        global $adminUrl;
+        global $adminAssetUrl;
         $model = new Product();
         $cates = Category::all();
         $products = Product::all();
-        include_once './views/product/addForm.php';
+        include_once './views/admin/product/addForm.php';
     }
 
     public function editForm(){
         global $baseUrl;
+        global $adminUrl;
+        global $adminAssetUrl;
         $id = $_GET['id'];   
         $product = Product::find($id);
         $cates = Category::all();
         $products = Product::all();
 
-        include_once './views/product/editForm.php';
+        include_once './views/admin/product/editForm.php';
     }
 
     public function saveAdd(){
@@ -158,7 +165,7 @@ class ProductController
 
         // var_dump($model->queryBuilder);die;
         $model->exeQuery();
-        header('location: ./product');
+        header('location: ./product?success=true');
         
     }
 

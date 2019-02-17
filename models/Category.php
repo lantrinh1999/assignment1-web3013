@@ -1,5 +1,6 @@
 <?php
 require_once './models/BaseModel.php';
+require_once './models/Login.php';
 class Category extends BaseModel
 {
     public $table = 'categories';

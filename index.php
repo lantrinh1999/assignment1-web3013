@@ -1,113 +1,130 @@
 <?php
+
 $url = isset($_GET['url']) ? $_GET['url'] : '/';
 $baseUrl = "http://localhost:81/web3013/assignment1/";
+$adminUrl = "http://localhost:81/web3013/assignment1/views/admin";
+$adminAssetUrl = "http://localhost:81/web3013/assignment1/views/admin/adminlte/";
 
 require_once "./controllers/HomeController.php";
 require_once "./controllers/ProductController.php";
 require_once "./controllers/CategoryController.php";
 require_once "./controllers/UserController.php";
+require_once "./controllers/AdminController.php";
+require_once "./controllers/LoginController.php";
+
 switch($url){
     case '/':
         $ctr = new HomeController();
         echo $ctr->index();
         break;
     
-
+/* admin */
+    case 'admin':
+        $ctr = new AdminController();
+        echo $ctr->index();
+        break;
 /* Product*/     
-    case 'product':
+    case 'admin/product':
         $ctr = new ProductController();
         echo $ctr->index();
         break;    
     /* remove */
-    case 'product-remove':
+    case 'admin/product-remove':
         $ctr = new ProductController();
         echo $ctr->remove();
         break;
     /*add*/
-    case 'product-add':
+    case 'admin/product-add':
         $ctr = new ProductController();
         echo $ctr->addForm();
         break;
     
-    case 'product-save-add':
+    case 'admin/product-save-add':
         $ctr = new ProductController();
         echo $ctr->saveAdd();
         break;
     /*edit*/
-    case 'product-edit':
+    case 'admin/product-edit':
         $ctr = new ProductController();
         echo $ctr->editForm();
         break;
 
-    case 'product-save-edit':
+    case 'admin/product-save-edit':
         $ctr = new ProductController();
         echo $ctr->saveEdit();
         break; 
 
 /* Category*/     
-    case 'category':
+    case 'admin/category':
         $ctr = new CategoryController();
         echo $ctr->index();
         break;    
     /* remove */
-    case 'category-remove':
+    case 'admin/category-remove':
         $ctr = new CategoryController();
         echo $ctr->remove();
         break;
     /*add*/
-    case 'category-add':
+    case 'admin/category-add':
         $ctr = new CategoryController();
         echo $ctr->addForm();
         break;
     
-    case 'category-save-add':
+    case 'admin/category-save-add':
         $ctr = new CategoryController();
         echo $ctr->saveAdd();
         break;
     /*edit*/
-    case 'category-edit':
+    case 'admin/category-edit':
         $ctr = new CategoryController();
         echo $ctr->editForm();
         break;
 
-    case 'category-save-edit':
+    case 'admin/category-save-edit':
         $ctr = new CategoryController();
         echo $ctr->saveEdit();
         break;  
 
 /* User*/     
-    case 'user':
+    case 'admin/user':
         $ctr = new UserController();
         echo $ctr->index();
         break;    
     /* remove */
-    case 'user-remove':
+    case 'admin/user-remove':
         $ctr = new UserController();
         echo $ctr->remove();
         break;
     /*add*/
-    case 'user-add':
+    case 'admin/user-add':
         $ctr = new UserController();
         echo $ctr->addForm();
         break;
     
-    case 'user-save-add':
+    case 'admin/user-save-add':
         $ctr = new UserController();
         echo $ctr->saveAdd();
         break;
     /*edit*/
-    case 'user-edit':
+    case 'admin/user-edit':
         $ctr = new UserController();
         echo $ctr->editForm();
         break;
 
-    case 'user-save-edit':
+    case 'admin/user-save-edit':
         $ctr = new UserController();
         echo $ctr->saveEdit();
         break;  
 
+    case 'login':
+        $ctr = new LoginController();
+        echo $ctr->index();
+        break;  
 
-
+    case 'post-login':
+        $ctr = new LoginController();
+        echo $ctr->postLogin();
+        break;    
 
 
 

@@ -8,9 +8,6 @@ class HomeController
         include_once './views/homepage.php';
     }
 
-    public function detailProduct(){
-        return "HomeController->detailProduct()";
-    }
 }
 
 ?>
