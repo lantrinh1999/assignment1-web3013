@@ -6,12 +6,12 @@
 require_once './models/Product.php';
 require_once './models/Category.php';
 require_once './models/Login.php';
-class ProductController
-{
+class ProductController{
     public function index(){
         global $baseUrl;
         global $adminUrl;
         global $adminAssetUrl;
+        Login::checkLogin(300);
         $products = Product::all();
         // echo "<pre>";
 
@@ -21,6 +21,7 @@ class ProductController
 
 
     public function remove(){
+        Login::checkLogin(300);
         $id = $_GET['id'];
 
         Product::delete($id);
@@ -32,6 +33,7 @@ class ProductController
         global $baseUrl;
         global $adminUrl;
         global $adminAssetUrl;
+        Login::checkLogin(300);
         $model = new Product();
         $cates = Category::all();
         $products = Product::all();
@@ -42,6 +44,7 @@ class ProductController
         global $baseUrl;
         global $adminUrl;
         global $adminAssetUrl;
+        Login::checkLogin(300);
         $id = $_GET['id'];   
         $product = Product::find($id);
         $cates = Category::all();
@@ -51,6 +54,7 @@ class ProductController
     }
 
     public function saveAdd(){
+
         $model = new Product();
         foreach($_POST as $key => $val){
             $model->{$key} = $val;
@@ -170,6 +174,7 @@ class ProductController
     }
 
     public function saveEdit(){
+        Login::checkLogin(300);
         $model = Product::find($_POST['id']);
         $id = $model->id;
         foreach($_POST as $key => $val){

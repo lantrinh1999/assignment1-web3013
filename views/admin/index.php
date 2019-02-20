@@ -47,7 +47,6 @@ require_once './views/admin/_share/lside.php';
           <div class="small-box bg-aqua">
             <div class="inner">
               <h3><?= $count_Product ?></h3>
-
               <p>Sản phẩm</p>
             </div>
             <div class="icon">
@@ -139,7 +138,7 @@ require_once './views/admin/_share/bottom_asset.php';
   <?php 
   if(isset($_GET['success']) && $_GET['success'] == 'true'){
     ?>
-    swal('Thêm Sản phẩm thành công!');
+    swal('Đăng nhập thành công!');
   <?php
   }
    ?>

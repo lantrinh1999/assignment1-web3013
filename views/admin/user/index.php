@@ -5,6 +5,9 @@
 <?php 
 require_once './views/admin/_share/top_asset.php';
  ?>
+ <style type="text/css">
+
+ </style>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
@@ -65,6 +68,7 @@ require_once './views/admin/_share/lside.php';
                 <td><?= $item->name ?></td>
                 <td><?= $item->email ?></td>
                 <td>
+
                     <?php 
                         if ($item->role >= 900) {
                             echo "admin";
@@ -79,9 +83,12 @@ require_once './views/admin/_share/lside.php';
                     <span class="">
                         <a class="btn btn-xs btn-info" href="<?= $baseUrl . "admin/user-edit?id=" . $item->id?>">Sửa</a>
                     </span>
-
+                          <?php         
+                          if ($item->id == $uid) {
+                          $disable = "isDisabled";
+        } ?>
                     <span>
-                        <a class="btn btn-xs btn-danger btn-remove" href="javascript:;"
+                        <a class="btn btn-xs btn-danger btn-remove <?= $disable ?>" href="javascript:;"
                           linkurl="<?= $baseUrl . "admin/user-remove?id=" . $item->id?>">Xóa</a>                        
                     </span>
                 </td>

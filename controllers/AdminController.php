@@ -16,12 +16,14 @@ class AdminController
 		global $baseUrl;
 		global $adminUrl;
 		global $adminAssetUrl;
+		
 		$category = Category::all();
 		$product = Product::all();
 		$user = User::all();
 		$count_Product = Product::count();
 		$count_Category = Category::count();
 		$count_User = User::count();
+		Login::checkLogin(300);
 
 		include_once './views/admin/index.php';
 

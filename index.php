@@ -1,4 +1,5 @@
 <?php
+session_start();
 
 $url = isset($_GET['url']) ? $_GET['url'] : '/';
 $baseUrl = "http://localhost:81/web3013/assignment1/";
@@ -125,7 +126,10 @@ switch($url){
         $ctr = new LoginController();
         echo $ctr->postLogin();
         break;    
-
+    case 'logout':
+        $ctr = new LoginController();
+        echo $ctr->logout();
+        break; 
 
 
     default:

@@ -8,6 +8,7 @@ class CategoryController
                 global $baseUrl;
         global $adminUrl;
         global $adminAssetUrl;
+        Login::checkLogin(300);
         $categories = Category::all();
         // echo "<pre>";
 
@@ -17,6 +18,7 @@ class CategoryController
 
 
     public function remove(){
+        Login::checkLogin(300);
         $id = $_GET['id'];
         Category::delete($id);
         Category::deleteProduct($id);
@@ -27,12 +29,14 @@ class CategoryController
         global $baseUrl;
         global $adminUrl;
         global $adminAssetUrl;
+        Login::checkLogin(300);
         $model = new Category();
         $cates = Category::all();       
         include_once './views/admin/category/addForm.php';
     }
 
     public function saveAdd(){
+        Login::checkLogin(300);
         $model = new Category();
         $model->cate_name= $_POST['cate_name'];
         $model->description= $_POST['desc'];
@@ -87,6 +91,7 @@ class CategoryController
         global $baseUrl;
         global $adminUrl;
         global $adminAssetUrl;
+        Login::checkLogin(300);
         $id = $_GET['id'];
         $category = Category::find($id);
         $cates = Category::all();
@@ -95,6 +100,7 @@ class CategoryController
     }
 
     public function saveEdit(){
+        Login::checkLogin(300);
         $model = new Category();
         $id = $_POST['id'];
         $model->id= $_POST['id'];

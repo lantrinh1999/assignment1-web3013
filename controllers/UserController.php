@@ -7,8 +7,12 @@ class UserController
     public function index(){
         global $baseUrl;
         global $adminUrl;
-        global $adminAssetUrl;        
+        global $adminAssetUrl;   
+        Login::checkLogin(900);     
         $users = User::all();
+        $uid = $_SESSION['login']['id'];
+
+
         // echo "<pre>";
 
         // var_dump($users);die;
@@ -17,9 +21,12 @@ class UserController
 
 
     public function remove(){
+        Login::checkLogin(900);  
         $id = $_GET['id'];
-
-        User::delete($id);
+        $uid = $_SESSION['login']['id'];
+        if ($id !== $uid) {
+            User::delete($id);
+        }
         header('location: ./user');
     }
 
@@ -27,6 +34,7 @@ class UserController
         global $baseUrl;
         global $adminUrl;
         global $adminAssetUrl;
+        Login::checkLogin(900);  
         $model = new User();
         $users = User::all();
 
@@ -35,6 +43,7 @@ class UserController
     }
 
     public function saveAdd(){
+        Login::checkLogin(900);  
         global $baseUrl;        
         $model = new User();
 
@@ -132,6 +141,7 @@ class UserController
         global $baseUrl;
         global $adminUrl;
         global $adminAssetUrl;
+        Login::checkLogin(900);  
         $id = $_GET['id'];
         $user = User::find($id);
         $users = User::all();

@@ -85,7 +85,7 @@ $countUser = $stmt->fetch();
           <!-- small box -->
           <div class="small-box bg-green">
             <div class="inner">
-              <h3><?= $countPro['total']?></h3>
+              <h3><?= $countPro['total']  . $_SESSION['login']?></h3>
 
               <p>Tổng số sản phẩm</p>
             </div>
